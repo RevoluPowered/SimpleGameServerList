@@ -115,7 +115,7 @@ def create_match():
     gamename = request.forms.get('name')
     password = request.forms.get('password')
     count = request.forms.get('maxplayers')
-    address = request.forms.get('address')
+    address = retrieve_ip()
     port = request.forms.get('port')
 
     # create the match - will be stored internally automatically
