@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d9671f360e2ad3c0e5c4e027b5f8ee864d70d4de27e18a477c6001317b3193b4"
+            "sha256": "227df73129fd5f5a4f48b62baf9433089fcee4f02dc55ea4628a16b60c9fbaee"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -17,9 +17,12 @@
             "sys_platform": "win32"
         },
         "pipfile-spec": 5,
-        "requires": {},
+        "requires": {
+            "python_version": "3.6"
+        },
         "sources": [
             {
+                "name": "pypi",
                 "url": "https://pypi.python.org/simple",
                 "verify_ssl": true
             }
