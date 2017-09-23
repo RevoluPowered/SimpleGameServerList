@@ -72,33 +72,33 @@ def index():
 #
 # Debug forms for testing purposes
 # remove them in production use
+DEBUG = False
+if DEBUG:
+    @get('/matchmaking/create')
+    def create_match_debug():
+        """ this is for debugging purposes, returns manual forms for testing the server out """
+        return '''
+            <h3>Game info</h3>
+            <form action="/matchmaking/create" method="post">
+                Name: <input name="name" type="text" />
+                Password: <input name="password" type="password" />
+                Players: <input name ="maxplayers" type="number" value=10/>
+                Port: <input name ="port" type="number" value="27015"/>
+                Address: <input name ="address" type="text" value="192.168.0.1"/>
+                <input value="Create Game" type="submit" />
+            </form>
+        '''
 
-
-
-@get('/matchmaking/create')
-def create_match_debug():
-    return '''
-        <h3>Game info</h3>
-        <form action="/matchmaking/create" method="post">
-            Name: <input name="name" type="text" />
-            Password: <input name="password" type="password" />
-            Players: <input name ="maxplayers" type="number" value=10/>
-            Port: <input name ="port" type="number" value="27015"/>
-            Address: <input name ="address" type="text" value="192.168.0.1"/>
-            <input value="Create Game" type="submit" />
-        </form>
-    '''
-
-@get('/matchmaking/join')
-def join_match_debug():
-    return '''
-        <h3>Game info</h3>
-        <form action="/matchmaking/join" method="post">
-            Name: <input name="name" type="text" />
-            Password: <input name="password" type="password" />
-            <input value="Join Game" type="submit" />
-        </form>
-    '''
+    @get('/matchmaking/join')
+    def join_match_debug():
+        return '''
+            <h3>Game info</h3>
+            <form action="/matchmaking/join" method="post">
+                Name: <input name="name" type="text" />
+                Password: <input name="password" type="password" />
+                <input value="Join Game" type="submit" />
+            </form>
+        '''
 
 #
 # Matchmaking functions
@@ -140,4 +140,4 @@ def join_game():
 
 
 
-run(host='localhost', port=8080, debug=True)
+run(host='localhost', port=27015, debug=False)
