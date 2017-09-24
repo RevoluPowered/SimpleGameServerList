@@ -1,8 +1,12 @@
 [Unit]
 Description=Matchmaking server
+After=syslog.target
 [Service]
-Type=forking
-Environment=statedir=/home/matchmaking/BottleHoser/
+Type=simple
+User=matchmaking
+WorkingDirectory=/home/matchmaking/BottleHoser/
 ExecStart=/home/matchmaking/BottleHoser/launch.sh
+StandardOutput=syslog
+StandardError=syslog
 [Install]
 WantedBy=multi-user.target
