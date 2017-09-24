@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python 
 
 # note: we are using pipenv and python 3.6.1
 from sys import stdout
@@ -13,7 +13,7 @@ basicConfig(filename='matchmakingserver.log', level=DEBUG)
 Endpoint = namedtuple('Endpoint', ['address', 'port'] )
 
 # Webserver and Code Debugging?
-DEBUG = False
+DEBUG = True
 
 class Match:
     """ match data container """
@@ -64,6 +64,27 @@ class Match:
 
         return "match not found"
 
+    @staticmethod
+    def close_match(name, _ip):
+        """ close down a match when the host quits or the dedicated server is closed """
+        debug("finding match to close down")
+
+        to_delete = None
+        for match in Match.matches:
+            if match.gamename == name:
+                to_delete = match
+        
+        if to_delete is not None:
+            # remove from list
+            Match.matches.remove(to_delete)
+            debug("completed deleting match")
+            return "closed match"
+        else:
+            debug("unable to delete match")
+            return "match not found"
+
+
+
     def server_info(self):
         match_info = {}
         match_info['name'] = self.gamename
@@ -96,7 +117,7 @@ if DEBUG:
     def create_match_debug():
         """ this is for debugging purposes, returns manual forms for testing the server out """
         return '''
-            <h3>Game info</h3>
+            <h3>Create new game</h3>
             <form action="/matchmaking/create" method="post">
                 Name: <input name="name" type="text" />
                 Password: <input name="password" type="password" />
@@ -110,11 +131,21 @@ if DEBUG:
     @get('/matchmaking/join')
     def join_match_debug():
         return '''
-            <h3>Game info</h3>
+            <h3>Join game</h3>
             <form action="/matchmaking/join" method="post">
                 Name: <input name="name" type="text" />
                 Password: <input name="password" type="password" />
                 <input value="Join Game" type="submit" />
+            </form>
+        '''
+
+    @get('/matchmaking/close')
+    def close_match_debug():
+        return '''
+            <h3>Close game</h3>
+            <form action="/matchmaking/close" method="post">
+                Name: <input name="name" type="text" />               
+                <input value="Close Game" type="submit" />
             </form>
         '''
 
@@ -167,6 +198,17 @@ def join_game():
     else:
         # will be error message
         return endpoint
+
+    
+@post('/matchmaking/close')
+def close_game():
+    """ close the game, if it can be found """
+    gamename = request.forms.get('name')
+    # HTTP_X_FORWARDED_FOR is a proxy check, if it returns null the REMOTE_ADDR is used.
+    ip = retrieve_ip()
+    # post: close the match and return the status of the match to the client
+    return Match.close_match(gamename, ip)
+
 
 
 run(server='paste', host='0.0.0.0', port=27015, debug=DEBUG)
