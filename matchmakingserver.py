@@ -25,7 +25,14 @@ class Match:
         self.player_count = 0
         self.server_address = server_address
         self.server_port = server_port
-        self.server_password = password
+
+        if password is None:
+            debug("server has no password.")
+            self.server_password = ""
+        else:
+            debug("server registered with password.")
+            self.server_password = password
+        
         debug("create new match: " + str(self))
         Match.matches.append(self)
 
@@ -44,6 +51,10 @@ class Match:
     def join_match(name, password, _ip):
         """ join a match by name, returns server info if the password is correct """
         debug("finding match for " + _ip)
+
+        # do not require a password to be supplied.
+        if password is None:
+            password = ""
 
         for match in Match.matches:
             if match.gamename == name:
