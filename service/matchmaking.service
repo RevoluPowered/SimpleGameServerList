@@ -4,6 +4,7 @@ After=syslog.target
 [Service]
 Type=simple
 User=matchmaking
+Group=matchmaking
 WorkingDirectory=/home/matchmaking/BottleHoser/
 ExecStart=/home/matchmaking/BottleHoser/launch.sh
 StandardOutput=syslog
