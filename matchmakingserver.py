@@ -12,6 +12,8 @@ basicConfig(filename='matchmakingserver.log', level=DEBUG)
 
 Endpoint = namedtuple('Endpoint', ['address', 'port'] )
 
+# Webserver and Code Debugging?
+DEBUG = False
 
 class Match:
     """ match data container """
@@ -88,7 +90,7 @@ def index():
 #
 # Debug forms for testing purposes
 # remove them in production use
-DEBUG = True
+
 if DEBUG:
     @get('/matchmaking/create')
     def create_match_debug():
