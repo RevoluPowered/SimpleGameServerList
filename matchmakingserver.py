@@ -7,16 +7,20 @@ from bottle import request, route, run, get, post
 from logging import basicConfig, debug, info, warning, DEBUG
 from collections import namedtuple
 
+
 basicConfig(filename='matchmakingserver.log', level=DEBUG)
 
-class Match:    
+Endpoint = namedtuple('Endpoint', ['address', 'port'] )
+
+
+class Match:
     """ match data container """
 
     matches = []
 
     def __init__(self, gamename, password, max_players, server_address, server_port):
         """ initialise a new match """
-        self.gamename = gamename        
+        self.gamename = gamename
         self.max_players = max_players
         self.player_count = 0
         self.server_address = server_address
@@ -24,13 +28,14 @@ class Match:
         self.server_password = password
         debug("create new match: " + str(self))
         Match.matches.append(self)
-    
+
+
     def request_join(self, _password, _ip):
         """ request join to the server """
         debug("join requested from: " + _ip)
-        if(self.server_password == _password):
+        if self.server_password == _password:
             debug("join successful for " + _ip)
-            return "" + str(self.server_address) + ":" + str(self.server_port)
+            return Endpoint(str(self.server_address), int(self.server_port))
         else:
             debug("join failed for " + _ip)
             return "incorrect server password"
@@ -46,13 +51,13 @@ class Match:
 
         return "match not found"
 
-    def server_info(self):        
+    def server_info(self):
         match_info = {}
         match_info['name'] = self.gamename
         match_info['max_players'] = self.max_players
         match_info['players'] = self.player_count
-        
         return match_info
+
 
     def __str__(self):
         output_str = []
@@ -72,7 +77,7 @@ def index():
 #
 # Debug forms for testing purposes
 # remove them in production use
-DEBUG = False
+DEBUG = True
 if DEBUG:
     @get('/matchmaking/create')
     def create_match_debug():
@@ -134,10 +139,22 @@ def join_game():
     password = request.forms.get('password')
     # HTTP_X_FORWARDED_FOR is a proxy check, if it returns null the REMOTE_ADDR is used.
     ip = retrieve_ip()
-    
-    return Match.join_match(gamename, password, ip)
+    # post: join match and retrieve endpoint for sending to client
+    endpoint = Match.join_match(gamename, password, ip)
+    # validate endpoint
+    if type(endpoint) is not str:
+        # check if this connection is a developer or the same player re-connecting to their own server
+        # bad way of handling it but we can fix this later.
+        if endpoint.address == ip:
+            debug("Found another LAN client redirecting to editor")
+            return "" + "127.0.0.1" + ":" + str(endpoint.port)
+        else:
+            debug("returning known global IP address")
+            return "" + endpoint.address + ":" + str(endpoint.port)
+    else:
+        # will be error message
+        return endpoint
 
 
 
-
-run(server='paste', host='0.0.0.0', port=27015, debug=False)
+run(server='paste', host='0.0.0.0', port=27015, debug=DEBUG)
