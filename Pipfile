@@ -8,6 +8,7 @@ name = "pypi"
 bottle = "*"
 pylint = "*"
 paste = "*"
+python-daemon = "*"
 
 
 [dev-packages]

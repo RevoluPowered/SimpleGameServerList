@@ -169,5 +169,5 @@ def join_game():
         return endpoint
 
 
-
-run(server='paste', host='0.0.0.0', port=27015, debug=DEBUG)
+def main():
+    run(server='paste', host='0.0.0.0', port=27015, debug=DEBUG)
