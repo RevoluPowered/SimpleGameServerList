@@ -1,4 +1,5 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python3
+#production use
 
 # note: we are using pipenv and python 3.6.1
 from sys import stdout
@@ -13,7 +14,7 @@ basicConfig(filename='matchmakingserver.log', level=DEBUG)
 Endpoint = namedtuple('Endpoint', ['address', 'port'] )
 
 # Webserver and Code Debugging?
-DEBUG = True
+DEBUG = False
 
 class Match:
     """ match data container """
