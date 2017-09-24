@@ -1,2 +1,2 @@
-echo "Copying matcmaking server launch into /etc/init/matchmaking.conf"
-sudo cp matchmaking.conf /etc/init/matchmaking.conf
+# install systemd service (linux only)
+sudo cp matchmaking.service /lib/systemd/system/matchmaking.service

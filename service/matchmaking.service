@@ -1,0 +1,8 @@
+[Unit]
+Description=Matchmaking server
+[Service]
+Type=forking
+Environment=statedir=/home/matchmaking/BottleHoser/
+ExecStart=/home/matchmaking/BottleHoser/launch.sh
+[Install]
+WantedBy=multi-user.target
