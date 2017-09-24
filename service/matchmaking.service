@@ -6,7 +6,7 @@ Type=simple
 User=matchmaking
 Group=matchmaking
 WorkingDirectory=/home/matchmaking/BottleHoser/
-ExecStart=/home/matchmaking/BottleHoser/launch.sh
+ExecStart=/home/matchmaking/BottleHoser/matchmakingserver.py
 StandardOutput=syslog
 StandardError=syslog
 [Install]

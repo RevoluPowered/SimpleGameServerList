@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # note: we are using pipenv and python 3.6.1
 from sys import stdout
