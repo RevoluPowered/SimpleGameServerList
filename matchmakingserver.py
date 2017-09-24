@@ -140,4 +140,4 @@ def join_game():
 
 
 
-run(host='localhost', port=27015, debug=False)
+run(server='paste', host='0.0.0.0', port=27015, debug=False)
