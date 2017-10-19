@@ -14,8 +14,8 @@ basicConfig(filename='matchmakingserver.log', level=DEBUG)
 Endpoint = namedtuple('Endpoint', ['address', 'port'] )
 
 # Webserver and Code Debugging?
-#Debug = False
-DEBUG = True 
+Debug = False
+#DEBUG = True 
 
 class Match:
     """ match data container """
