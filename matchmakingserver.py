@@ -166,7 +166,7 @@ def create_match():
     #debug("request info: " + str(request.forms))
 #    return "query check: " + str(request.forms)
     gamename = str(request.forms.get('gamename'))
-    password = str(request.forms.get('password')) or ""
+    password = str(request.forms.get('password') or "")
     count = int(request.forms.get('maxplayers'))
     address = retrieve_ip()
     port = int(request.forms.get('port'))
@@ -183,8 +183,8 @@ def retrieve_ip():
 
 @post('/matchmaking/join')
 def join_game():
-    gamename = request.forms.get('name')
-    password = request.forms.get('password')
+    gamename = str(request.forms.get('name'))
+    password = str(request.forms.get('password') or "")
     # HTTP_X_FORWARDED_FOR is a proxy check, if it returns null the REMOTE_ADDR is used.
     ip = retrieve_ip()
     # post: join match and retrieve endpoint for sending to client
@@ -203,11 +203,11 @@ def join_game():
         # will be error message
         return endpoint
 
-    
+
 @post('/matchmaking/close')
 def close_game():
     """ close the game, if it can be found """
-    gamename = request.forms.get('name')
+    gamename = str(request.forms.get('name') or "")
     # HTTP_X_FORWARDED_FOR is a proxy check, if it returns null the REMOTE_ADDR is used.
     ip = retrieve_ip()
     # post: close the match and return the status of the match to the client
