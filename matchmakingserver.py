@@ -14,7 +14,8 @@ basicConfig(filename='matchmakingserver.log', level=DEBUG)
 Endpoint = namedtuple('Endpoint', ['address', 'port'] )
 
 # Webserver and Code Debugging?
-DEBUG = False
+#Debug = False
+DEBUG = True 
 
 class Match:
     """ match data container """
@@ -97,7 +98,7 @@ class Match:
     def __str__(self):
         output_str = []
         output_str.append("Game: " + self.gamename)
-        output_str.append(", max players: " + self.max_players)
+        output_str.append(", max players: " + str(self.max_players))
         output_str.append(", player count: " + str(self.player_count))
         output_str.append(", address: " + self.server_address)
         output_str.append(", port: " + str(self.server_port))
@@ -162,11 +163,11 @@ def list_matches():
 @post('/matchmaking/create')
 def create_match():
     debug("match requested")
-    gamename = request.forms.get('name')
-    password = request.forms.get('password')
-    count = request.forms.get('maxplayers')
+    gamename = str(request.forms.get('name'))
+    password = str(request.forms.get('password')) or ""
+    count = int(request.forms.get('maxplayers'))
     address = retrieve_ip()
-    port = request.forms.get('port')
+    port = int(request.forms.get('port'))
 
     # create the match - will be stored internally automatically
     game = Match(gamename, password, count, address, port)
