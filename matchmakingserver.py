@@ -163,7 +163,9 @@ def list_matches():
 @post('/matchmaking/create')
 def create_match():
     debug("match requested")
-    gamename = str(request.forms.get('name'))
+    #debug("request info: " + str(request.forms))
+#    return "query check: " + str(request.forms)
+    gamename = str(request.forms.get('gamename'))
     password = str(request.forms.get('password')) or ""
     count = int(request.forms.get('maxplayers'))
     address = retrieve_ip()
@@ -213,4 +215,4 @@ def close_game():
 
 
 
-run(server='paste', host='0.0.0.0', port=27015, debug=DEBUG)
+run(host='0.0.0.0', port=27015, debug=DEBUG)
