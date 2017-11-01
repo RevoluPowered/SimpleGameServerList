@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
-#production use
-
+#!/usr/bin/env python
 # note: we are using pipenv and python 3.6.1
 from sys import stdout
 import json
@@ -14,8 +12,8 @@ basicConfig(filename='matchmakingserver.log', level=DEBUG)
 Endpoint = namedtuple('Endpoint', ['address', 'port'] )
 
 # Webserver and Code Debugging?
-Debug = False
-#DEBUG = True 
+DEBUG_SERVER = False
+#DEBUG_SERVER = True
 
 class Match:
     """ match data container """
@@ -114,7 +112,7 @@ def index():
 # Debug forms for testing purposes
 # remove them in production use
 
-if DEBUG:
+if DEBUG_SERVER:
     @get('/matchmaking/create')
     def create_match_debug():
         """ this is for debugging purposes, returns manual forms for testing the server out """
@@ -215,4 +213,4 @@ def close_game():
 
 
 
-run(host='0.0.0.0', port=27014, debug=DEBUG)
+run(host='0.0.0.0', port=27014, debug=DEBUG_SERVER)
