@@ -6,7 +6,7 @@ Type=simple
 User=matchmaking
 Group=matchmaking
 WorkingDirectory=/home/matchmaking/BottleHoser/
-ExecStart=/home/matchmaking/BottleHoser/matchmakingserver.py
+ExecStart=/usr/local/bin/pipenv run ./matchmakingserver.py
 StandardOutput=syslog
 StandardError=syslog
 [Install]
