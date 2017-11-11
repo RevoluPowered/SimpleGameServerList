@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # note: we are using pipenv and python 3.6.1
+from gevent import monkey; monkey.patch_all()
 from sys import stdout
 import json
 from bottle import request, route, run, get, post
@@ -213,4 +214,4 @@ def close_game():
 
 
 
-run(host='0.0.0.0', port=27014, debug=DEBUG_SERVER)
+run(host='0.0.0.0', port=27014, debug=DEBUG_SERVER, server='gevent')
