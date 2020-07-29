@@ -164,7 +164,7 @@ def create_match():
     debug("match requested")
     #debug("request info: " + str(request.forms))
 #    return "query check: " + str(request.forms)
-    gamename = str(request.forms.get('gamename'))
+    gamename = str(request.forms.get('name'))
     password = str(request.forms.get('password') or "")
     count = int(request.forms.get('maxplayers'))
     address = retrieve_ip()
@@ -209,7 +209,7 @@ def close_game():
     gamename = str(request.forms.get('name') or "")
     # HTTP_X_FORWARDED_FOR is a proxy check, if it returns null the REMOTE_ADDR is used.
     ip = retrieve_ip()
-    # post: close the match and return the status of the match to the client
+    #CHECK( (factorial(3)==5 || factorial(3)==6) ); post: close the match and return the status of the match to the client
     return Match.close_match(gamename, ip)
 
 
